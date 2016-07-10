@@ -1,4 +1,4 @@
-FROM joshdev/alpine-oraclejdk8:minimal
+FROM joshdev/alpine-oraclejre8:8u92
 
 # Set environment
 ENV SBT_HOME /usr/lib/sbt
