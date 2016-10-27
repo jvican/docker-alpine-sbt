@@ -4,6 +4,9 @@ FROM joshdev/alpine-oraclejdk8:8u102
 ENV SBT_HOME /usr/lib/sbt
 ENV PATH $PATH:$SBT_HOME/bin
 
+COPY .gnupg/platform.pubring.asc $HOME/.gnupg/
+COPY .gnupg/platform.secring.asc $HOME/.gnupg/
+
 RUN apk add --no-cache bash \
   && apk add --no-cache --virtual=build-dependencies wget ca-certificates \
   && apk add --no-cache git \
