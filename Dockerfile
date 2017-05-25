@@ -36,41 +36,8 @@ RUN apk del build-dependencies
 RUN apk del build-base zlib-dev ruby-dev readline-dev libffi-dev libxml2-dev
 
 # Set up and warm sbt
-RUN mkdir /root/scala-212
-RUN mkdir /root/scala-212/project
-RUN echo 'sbt.version = 0.13.13' > /root/scala-212/project/build.properties
-RUN echo 'scalaVersion := "2.12.1"' > /root/scala-212/build.sbt
-RUN mkdir -p /root/scala-212/src/main/scala
-RUN echo 'object Main { def main(args: Array[String]): Unit = println("Hello, World!") }' > /root/scala-212/src/main/scala/Main.scala
-RUN cd /root/scala-212; $UNDERLYING_SBT run -Dsbt.boot.properties=/sbt.boot
-
-RUN mkdir /root/scala-211
-RUN mkdir /root/scala-211/project
-RUN echo 'sbt.version = 0.13.13' > /root/scala-211/project/build.properties
-RUN echo 'scalaVersion := "2.11.8"' > /root/scala-211/build.sbt
-RUN mkdir -p /root/scala-211/src/main/scala
-RUN echo 'object Main { def main(args: Array[String]): Unit = println("Hello, World!") }' > /root/scala-211/src/main/scala/Main.scala
-RUN cd /root/scala-211; $UNDERLYING_SBT run -Dsbt.boot.properties=/sbt.boot
-
-RUN mkdir /root/scala-210
-RUN mkdir /root/scala-210/project
-RUN echo 'sbt.version = 0.13.13' > /root/scala-210/project/build.properties
-RUN echo 'scalaVersion := "2.10.6"' > /root/scala-210/build.sbt
-RUN mkdir -p /root/scala-210/src/main/scala
-RUN echo 'object Main { def main(args: Array[String]): Unit = println("Hello, World!") }' > /root/scala-210/src/main/scala/Main.scala
-RUN cd /root/scala-210; $UNDERLYING_SBT run -Dsbt.boot.properties=/sbt.boot
-
-RUN mkdir /root/dotty
-RUN mkdir /root/dotty/project
-RUN echo 'sbt.version = 0.13.13' > /root/dotty/project/build.properties
-RUN echo 'addSbtPlugin("com.felixmulder" % "sbt-dotty" % "0.1.9")' > /root/dotty/project/plugins.sbt
-RUN echo 'enablePlugins(DottyPlugin)' > /root/dotty/build.sbt
-RUN mkdir -p /root/dotty/src/main/scala
-RUN echo 'object Main { def main(args: Array[String]): Unit = println("Hello, World!") }' > /root/dotty/src/main/scala/Main.scala
-RUN cd /root/dotty; $UNDERLYING_SBT run -Dsbt.boot.properties=/sbt.boot
-
 RUN git clone https://github.com/olafurpg/warm-sbt
-RUN cd warm-sbt && git checkout v0.1.0 && $UNDERLYING_SBT "++run" -Dsbt.boot.properties=/sbt.boot && cd .. && rm -rf warm-sbt
+RUN cd warm-sbt && git checkout v0.2 && $UNDERLYING_SBT "+run" -Dsbt.boot.properties=/sbt.boot && cd .. && rm -rf warm-sbt
 RUN mv /root/.sbt/* /drone/.sbt
 RUN rm -rf /root/.sbt
 
